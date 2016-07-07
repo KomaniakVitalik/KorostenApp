@@ -26,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
+        ///TEST
+        getAllDataFromServer();
+        ///TEST
     }
 
     @Override
@@ -49,4 +54,11 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    ////TEST
+    private void getAllDataFromServer() {
+        CoreApp.getInstance().getDataManager().getAllData();
+    }
+    ////TEST
 }
