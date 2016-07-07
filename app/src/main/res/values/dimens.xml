@@ -3,4 +3,56 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="size_image">150dp</dimen>
+
+    <!--some often used margins/padding-->
+    <dimen name="spacing_small">5dp</dimen>
+    <dimen name="spacing_little">8dp</dimen>
+    <dimen name="spacing_normal">10dp</dimen>
+    <dimen name="spacing_medium">13dp</dimen>
+    <dimen name="spacing_big">16dp</dimen>
+    <dimen name="spacing_big_plus">20dp</dimen>
+    <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_huge">28dp</dimen>
+    <dimen name="spacing_extra_huge">32dp</dimen>
+    <dimen name="spacing_extra">48dp</dimen>
+    <dimen name="spacing_double_huge">56dp</dimen>
+
+    <!--text sizes-->
+    <dimen name="text_mini">10sp</dimen>
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="text_small_plus">13sp</dimen>
+    <dimen name="text_normal">14sp</dimen>
+    <dimen name="text_normal_plus">15sp</dimen>
+    <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_medium_plus">17sp</dimen>
+    <dimen name="text_large">18sp</dimen>
+    <dimen name="text_large_plus">19sp</dimen>
+    <dimen name="text_extra_large">22sp</dimen>
+    <dimen name="text_huge">24sp</dimen>
+    <dimen name="text_huge_plus">25sp</dimen>
+    <dimen name="text_extra_huge">27sp</dimen>
+    <dimen name="text_extra_huge_plus">30sp</dimen>
+    <dimen name="text_authorized">34sp</dimen>
+    <dimen name="text_date_day">56sp</dimen>
+
+    <!--others-->
+    <dimen name="divider_height">2dp</dimen>
+
+    <!-- typical sizes of views -->
+    <dimen name="button_height_extra_tall">100dp</dimen>
+    <dimen name="button_height_super_tall">70dp</dimen>
+    <dimen name="button_height_tall">60dp</dimen>
+    <dimen name="button_height_medium">50dp</dimen>
+    <dimen name="button_height_medium_less">45dp</dimen>
+    <dimen name="button_height_normal">36dp</dimen>
+    <dimen name="button_height_normal_plus">40dp</dimen>
+    <dimen name="button_height_short">32dp</dimen>
+    <dimen name="button_height_short_plus">44dp</dimen>
+    <dimen name="button_height_micro">25dp</dimen>
+    <dimen name="action_bar_height">56dp</dimen>
+    <dimen name="button_height_mini">17dp</dimen>
+    <dimen name="action_bar_button">154dp</dimen>
+    <dimen name="action_bar_button_max">250dp</dimen>
+    <dimen name="action_bar_button_txt_max">200dp</dimen>
 </resources>

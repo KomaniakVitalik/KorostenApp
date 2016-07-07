@@ -8,7 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -17,9 +19,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.korosten.www.R;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.InfoWindowAdapter, GoogleMap.OnMapClickListener {
 
-    static final LatLng TutorialsPoint = new LatLng(21 , 57);
+    static final LatLng TutorialsPoint = new LatLng(21, 57);
     private GoogleMap googleMap;
 
     @Override
@@ -70,10 +72,68 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         googleMap.setTrafficEnabled(true);
         googleMap.setIndoorEnabled(true);
         googleMap.setBuildingsEnabled(true);
         googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(37.7750, 122.4183))
+                .title("San Francisco")
+                .snippet("Population: 776733"));
+
+        googleMap.setInfoWindowAdapter(this);
+
+    }
+
+    @Override
+    public View getInfoWindow(Marker marker) {
+        return null;
+    }
+
+    @Override
+    public View getInfoContents(Marker marker) {
+        // Getting view from the layout file info_window_layout
+        View v = getLayoutInflater().inflate(R.layout.layout_custom_marker_dialog, null);
+
+        // Getting the position from the marker
+        LatLng latLng = marker.getPosition();
+
+        // Getting reference to the TextView to set latitude
+        TextView tvLat = (TextView) v.findViewById(R.id.tv_lat);
+
+        // Getting reference to the TextView to set longitude
+        TextView tvLng = (TextView) v.findViewById(R.id.tv_lng);
+
+        // Setting the latitude
+        tvLat.setText("Latitude:" + latLng.latitude);
+
+        // Setting the longitude
+        tvLng.setText("Longitude:" + latLng.longitude);
+
+        // Returning the view containing InfoWindow contents
+        return v;
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        // Clears any existing markers from the GoogleMap
+        googleMap.clear();
+
+        // Creating an instance of MarkerOptions to set position
+        MarkerOptions markerOptions = new MarkerOptions();
+
+        // Setting position on the MarkerOptions
+        markerOptions.position(latLng);
+
+        // Animating to the currently touched position
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        // Adding marker on the GoogleMap
+        Marker marker = googleMap.addMarker(markerOptions);
+
+        // Showing InfoWindow on the GoogleMap
+        marker.showInfoWindow();
     }
 }
