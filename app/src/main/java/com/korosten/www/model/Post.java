@@ -44,11 +44,31 @@ public class Post {
     @SerializedName("modified")
     @Expose
     private String modified;
-
     @SerializedName("categories")
+    @Expose
     private List<Category> categoriesList = new ArrayList<>();
     @SerializedName("tags")
+    @Expose
     private List<Tag> tagsList = new ArrayList<>();
+    @SerializedName("author")
+    @Expose
+    private Author author = new Author();
+    @SerializedName("attachments")
+    @Expose
+    private List<Attachment> attachmentList = new ArrayList<>();
+    @SerializedName("comment_count")
+    @Expose
+    private int commentCount;
+    @SerializedName("comment_status")
+    @Expose
+    private String commentStatus;
+    @SerializedName("thumbnail")
+    @Expose
+    private String thumbNail;
+    @SerializedName("thumbnail_images")
+    @Expose
+    private List<Image> thumbnailImagesList = new ArrayList<>();
+
 
     /**
      * @return The id
@@ -219,5 +239,53 @@ public class Post {
 
     public void setTagsList(List<Tag> tagsList) {
         this.tagsList = tagsList;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public List<Attachment> getAttachmentList() {
+        return attachmentList;
+    }
+
+    public void setAttachmentList(List<Attachment> attachmentList) {
+        this.attachmentList = attachmentList;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public String getCommentStatus() {
+        return commentStatus;
+    }
+
+    public void setCommentStatus(String commentStatus) {
+        this.commentStatus = commentStatus;
+    }
+
+    public String getThumbNail() {
+        return thumbNail;
+    }
+
+    public void setThumbNail(String thumbNail) {
+        this.thumbNail = thumbNail;
+    }
+
+    public List<Image> getThumbnailImagesList() {
+        return thumbnailImagesList;
+    }
+
+    public void setThumbnailImagesList(List<Image> thumbnailImagesList) {
+        this.thumbnailImagesList = thumbnailImagesList;
     }
 }
