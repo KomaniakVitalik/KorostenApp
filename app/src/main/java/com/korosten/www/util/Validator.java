@@ -8,11 +8,11 @@ import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 
-import com.www.funone.CoreApp;
+
+import com.korosten.www.CoreApp;
 
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
+
 
 /**
  * Created by vitaliy.herasymchuk on 4/6/16.

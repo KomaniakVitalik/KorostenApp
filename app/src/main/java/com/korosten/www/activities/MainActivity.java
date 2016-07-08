@@ -14,12 +14,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.korosten.www.CoreApp;
 import com.korosten.www.R;
+import com.korosten.www.util.map.BalloonAdapter;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.InfoWindowAdapter, GoogleMap.OnMapClickListener {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback
+        // , GoogleMap.InfoWindowAdapter
+        , GoogleMap.OnMapClickListener {
 
     static final LatLng TutorialsPoint = new LatLng(21, 57);
     private GoogleMap googleMap;
@@ -45,7 +51,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
+///TEST
+        getAllDataFromServer();
+        ///TEST
     }
 
     @Override
@@ -73,47 +81,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-        googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        googleMap.setInfoWindowAdapter(new BalloonAdapter(getLayoutInflater()));
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         googleMap.setTrafficEnabled(true);
         googleMap.setIndoorEnabled(true);
         googleMap.setBuildingsEnabled(true);
         googleMap.getUiSettings().setZoomControlsEnabled(true);
         googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(37.7750, 122.4183))
+                .position(new LatLng(37.7750, 121.4183))
                 .title("San Francisco")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_2))
                 .snippet("Population: 776733"));
-
-        googleMap.setInfoWindowAdapter(this);
-
-    }
-
-    @Override
-    public View getInfoWindow(Marker marker) {
-        return null;
-    }
-
-    @Override
-    public View getInfoContents(Marker marker) {
-        // Getting view from the layout file info_window_layout
-        View v = getLayoutInflater().inflate(R.layout.layout_custom_marker_dialog, null);
-
-        // Getting the position from the marker
-        LatLng latLng = marker.getPosition();
-
-        // Getting reference to the TextView to set latitude
-        TextView tvLat = (TextView) v.findViewById(R.id.tv_lat);
-
-        // Getting reference to the TextView to set longitude
-        TextView tvLng = (TextView) v.findViewById(R.id.tv_lng);
-
-        // Setting the latitude
-        tvLat.setText("Latitude:" + latLng.latitude);
-
-        // Setting the longitude
-        tvLng.setText("Longitude:" + latLng.longitude);
-
-        // Returning the view containing InfoWindow contents
-        return v;
     }
 
     @Override
@@ -136,4 +114,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Showing InfoWindow on the GoogleMap
         marker.showInfoWindow();
     }
+
+    ////TEST
+    private void getAllDataFromServer() {
+        //CoreApp.getInstance().getDataManager().getAllData();
+    }
+    ////TEST
 }

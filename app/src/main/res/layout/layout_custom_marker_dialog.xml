@@ -2,30 +2,58 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_custom_marker_dialog">
+    android:background="@drawable/background_custom_marker_dialog"
+    android:clickable="false">
 
-    <TextView
-        android:id="@+id/tv_marker_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:textColor="@color/blue"
-        android:textSize="@dimen/text_extra_large" />
+    <RelativeLayout
+        android:layout_width="320dp"
+        android:layout_height="130dp"
+        android:layout_centerInParent="true">
 
-    <ImageView
-        android:layout_width="@dimen/size_image"
-        android:layout_height="@dimen/size_image"
-        android:layout_alignParentRight="true" />
 
-    <TextView
-        android:id="@+id/tv_lat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_marker_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/spacing_normal"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_extra_large"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_lng"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="@dimen/size_image"
+            android:layout_height="@dimen/size_image"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/spacing_normal"
+            android:src="@drawable/dialog_image" />
 
+        <TextView
+            android:id="@+id/tv_lat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_lng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_details"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_short"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/spacing_normal"
+            android:background="@drawable/background_details_button"
+            android:gravity="center"
+            android:paddingLeft="@dimen/spacing_little"
+            android:paddingRight="@dimen/spacing_little"
+            android:text="@string/details"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_large" />
+    </RelativeLayout>
 </RelativeLayout>

@@ -1,6 +1,5 @@
 package com.korosten.www.util;
 
-import com.www.funone.model.User;
 
 import io.realm.RealmObject;
 
@@ -16,7 +15,6 @@ public class AppSettings extends RealmObject {
     private boolean google;
     private boolean vk;
 
-    private User user;
 
     public boolean isAutoPlay() {
         return isAutoPlay;
@@ -34,31 +32,30 @@ public class AppSettings extends RealmObject {
         this.enableNotifications = enableNotifications;
     }
 
-    public boolean isFacebook() {
-        if(Validator.isObjectValid(user)){
-            return user.isFacebook();
-        }
-        return facebook;
-    }
-
-    public void setFacebook(boolean facebook) {
-        this.facebook = facebook;
-    }
-
-    public boolean isGoogle() {
-        if(Validator.isObjectValid(user)){
-            return user.isGoogle();
-        }
-        return google;
-    }
+//    public boolean isFacebook() {
+//        if(Validator.isObjectValid(user)){
+//            return user.isFacebook();
+//        }
+//        return facebook;
+//    }
+//
+//    public void setFacebook(boolean facebook) {
+//        this.facebook = facebook;
+//    }
+//
+//    public boolean isGoogle() {
+//        if(Validator.isObjectValid(user)){
+//            return user.isGoogle();
+//        }
+//        return google;
+//    }
 
     public void setGoogle(boolean google) {
         this.google = google;
     }
 
     public boolean isVk() {
-        if(Validator.isObjectValid(user)){
-            return user.isVk();
+        if(Validator.isObjectValid(null)){
         }
         return vk;
     }
@@ -67,14 +64,6 @@ public class AppSettings extends RealmObject {
         this.vk = vk;
     }
 
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public int getId() {
         return id;
@@ -96,7 +85,7 @@ public class AppSettings extends RealmObject {
         if (facebook != that.facebook) return false;
         if (google != that.google) return false;
         if (vk != that.vk) return false;
-        return user != null ? user.equals(that.user) : that.user == null;
+        return true;
 
     }
 
@@ -107,7 +96,7 @@ public class AppSettings extends RealmObject {
         result = 31 * result + (facebook ? 1 : 0);
         result = 31 * result + (google ? 1 : 0);
         result = 31 * result + (vk ? 1 : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
+
         return result;
     }
 
@@ -119,7 +108,7 @@ public class AppSettings extends RealmObject {
                 ", facebook=" + facebook +
                 ", google=" + google +
                 ", vk=" + vk +
-                ", user=" + user +
+                ", user=" +
                 '}';
     }
 

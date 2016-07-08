@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KorostenApp</string>
+    <string name="app_name">Korosten</string>
     <string name="action_settings">Settings</string>
 
     <string name="http_not_valid_response_object">Unable to get response from server. Please, try again</string>
@@ -7,6 +7,15 @@
     <string name="http_forbidden">Forbidden</string>
     <string name="http_not_found">Not Found</string>
     <string name="http_server_error">Internal Server Error</string>
+    <string name="title_activity_korosten">KorostenActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="details">подробние</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="map">Карта</string>
 
 
 </resources>
