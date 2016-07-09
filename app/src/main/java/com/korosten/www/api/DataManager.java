@@ -24,7 +24,7 @@ public class DataManager {
     public static final String TAG = "DataManager";
 
     public static final String EMPTY_SERVER_MESSAGE = "";
-    private static final int ERROR_NULL_RESPONSE_OBJECT = 1;
+    public static final int ERROR_NULL_RESPONSE_OBJECT = 1;
 
     private OnResponseListener mResponseListener;
     private RetrofitRequest requestBuilder;
@@ -202,7 +202,7 @@ public class DataManager {
     }
 
     /**
-     * Requests desired data count passes in params from server.
+     * Requests desired data count from server.
      */
     public static final String REQUEST_GET_ALL_DATA = "get_all_data";
 
@@ -212,7 +212,7 @@ public class DataManager {
             public void onResponse(Call<KorostenResponse> call, Response<KorostenResponse> response) {
                 Logger.d(TAG, "getAllData :: pages " + response.body().getPages());
                 Logger.d(TAG, "getAllData :: count total " + response.body().getCountTotal());
-                if (deliverResponse(response, REQUEST_GET_ALL_DATA)) ;
+                deliverResponse(response, REQUEST_GET_ALL_DATA);
             }
 
             @Override
