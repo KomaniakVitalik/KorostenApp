@@ -5,11 +5,17 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.korosten.www.R;
 import com.korosten.www.model.KorostenResponse;
+import com.korosten.www.model.Post;
+import com.korosten.www.model.Type;
 import com.korosten.www.util.Logger;
 import com.korosten.www.util.Validator;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,8 +32,11 @@ public class DataManager {
     public static final String EMPTY_SERVER_MESSAGE = "";
     public static final int ERROR_NULL_RESPONSE_OBJECT = 1;
 
+    public static final String FIELD_SIGHTSEENS = "dostoprimechatelnosti";
+
     private OnResponseListener mResponseListener;
     private RetrofitRequest requestBuilder;
+    private KorostenResponse korostenResponse = null;
 
 
     public DataManager(RetrofitRequest retrofitRequest) {
@@ -168,6 +177,8 @@ public class DataManager {
     /**************************************** Requests ********************************************/
     /**********************************************************************************************/
 
+    private Set<Type> postTypes = new HashSet<>();
+
     /**
      * Checks data count on server.
      */
@@ -212,7 +223,9 @@ public class DataManager {
             public void onResponse(Call<KorostenResponse> call, Response<KorostenResponse> response) {
                 Logger.d(TAG, "getAllData :: pages " + response.body().getPages());
                 Logger.d(TAG, "getAllData :: count total " + response.body().getCountTotal());
-                deliverResponse(response, REQUEST_GET_ALL_DATA);
+                if (deliverResponse(response, REQUEST_GET_ALL_DATA)) {
+                    korostenResponse = response.body();
+                }
             }
 
             @Override
@@ -223,5 +236,47 @@ public class DataManager {
         });
     }
 
+    /**
+     * Returns Set of available Type of Posts
+     */
+    public Set<Type> getPostsTypes() {
 
+        if (!postTypes.isEmpty()) {
+            Logger.d(TAG, "getPostsTypes :: list available, do not process");
+            return postTypes;
+        }
+
+        Set<Type> typeSet = new HashSet<>();
+        for (Post p : getKorostenResponse().getPosts()) {
+            if (Validator.isListValid(p.getTaxonomyAitItemsList())) {
+                if (p.getTaxonomyAitItemsList().size() > 0) {
+                    typeSet.add(p.getTaxonomyAitItemsList().get(0));
+                }
+            }
+        }
+        postTypes = typeSet;
+        return typeSet;
+    }
+
+    public List<Post> getPostsForType(Type type) {
+        List<Post> posts = new ArrayList<>();
+        if (Validator.isObjectValid(type)) {
+            for (Post p : getKorostenResponse().getPosts()) {
+                if (Validator.isListValid(p.getTaxonomyAitItemsList())) {
+                    if (p.getTaxonomyAitItemsList().size() > 0) {
+                        Type t = p.getTaxonomyAitItemsList().get(0);
+                        if (t.equals(type)) {
+                            posts.add(p);
+                        }
+                    }
+                }
+            }
+        }
+        return posts;
+    }
+
+
+    public KorostenResponse getKorostenResponse() {
+        return korostenResponse;
+    }
 }

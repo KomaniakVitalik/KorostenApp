@@ -7,7 +7,11 @@ import android.net.NetworkInfo;
 
 import com.korosten.www.api.DataManager;
 import com.korosten.www.api.RetrofitRequest;
+import com.korosten.www.model.Post;
 import com.korosten.www.util.Validator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -17,6 +21,10 @@ public class CoreApp extends Application {
 
     private static CoreApp instance;
     private DataManager dataManager;
+
+    //TODO STUB
+    private List<Post> postsStub = new ArrayList<>();
+
 
     @Override
     public void onCreate() {
@@ -47,5 +55,13 @@ public class CoreApp extends Application {
                 return false;
             }
         }
+    }
+
+    public List<Post> getPostsStub() {
+        return postsStub;
+    }
+
+    public void setPostsStub(List<Post> postsStub) {
+        this.postsStub = postsStub;
     }
 }

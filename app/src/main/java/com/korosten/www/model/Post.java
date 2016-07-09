@@ -68,6 +68,9 @@ public class Post {
     @SerializedName("thumbnail_images")
     @Expose
     private ImageTypes thumbnailImages;
+    @SerializedName("taxonomy_ait-items")
+    @Expose
+    private List<Type> taxonomyAitItemsList = new ArrayList<>();
 
 
     /**
@@ -287,5 +290,13 @@ public class Post {
 
     public void setThumbnailImages(ImageTypes thumbnailImages) {
         this.thumbnailImages = thumbnailImages;
+    }
+
+    public List<Type> getTaxonomyAitItemsList() {
+        return taxonomyAitItemsList;
+    }
+
+    public void setTaxonomyAitItemsList(List<Type> taxonomyAitItemsList) {
+        this.taxonomyAitItemsList = taxonomyAitItemsList;
     }
 }
