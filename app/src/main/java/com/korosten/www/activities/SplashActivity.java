@@ -1,14 +1,13 @@
 package com.korosten.www.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.korosten.www.CoreApp;
 import com.korosten.www.R;
 
 public class SplashActivity extends AppCompatActivity {
@@ -29,13 +28,17 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                finish();
-                startActivity(new Intent(SplashActivity.this, KorostenActivity.class));
-            }
-        }, 2000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                finish();
+//                startActivity(new Intent(SplashActivity.this, KorostenActivity.class));
+//            }
+//        }, 2000);
+
+        CoreApp.getInstance().getDataManager().getDataCount();
     }
+
+
 
 }

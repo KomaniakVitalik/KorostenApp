@@ -1,16 +1,18 @@
 package com.korosten.www.api;
 
 
+import com.korosten.www.model.KorostenResponse;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
  * Responsible for creating Retrofit Requests
@@ -21,6 +23,9 @@ public class RetrofitRequest {
 
     public static final int TIMEOUT = 60;
     private static final String BASE_URL = "http://korosten.top/api/";
+    public static final String KOROSTEN_TOKEN = "v=3943d8795e03";
+    private static final String GET_POSTS_COUNT = "get_recent_posts/?page=1&post_type=any&" + KOROSTEN_TOKEN;
+    private static final String GET_RECENT_ALL_POSTS = "get_recent_posts/?page=1&post_type=any";
 
     private KorostenApi api;
 
@@ -46,16 +51,19 @@ public class RetrofitRequest {
 
     private HttpLoggingInterceptor createLoggingInterceptor() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        // loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
         return loggingInterceptor;
     }
 
 
     public interface KorostenApi {
-        @GET()
-        Call<ResponseBody> getAllData();
+        @GET(GET_POSTS_COUNT)
+        Call<KorostenResponse> checkAmountOfData();
+
+        @GET(GET_RECENT_ALL_POSTS)
+        Call<KorostenResponse> getAllData(@Query("count") String count);
 
     }
 
@@ -63,8 +71,12 @@ public class RetrofitRequest {
     /************************************** Api Calls *********************************************/
     /**********************************************************************************************/
 
-    public void getAllData(Callback<ResponseBody> callback) {
-        api.getAllData().enqueue(callback);
+    public void getDataCount(Callback<KorostenResponse> callback) {
+        api.checkAmountOfData().enqueue(callback);
+    }
+
+    public void getAllData(int totalDataCount, Callback<KorostenResponse> callback) {
+        api.getAllData(String.valueOf(totalDataCount)).enqueue(callback);
     }
 
 

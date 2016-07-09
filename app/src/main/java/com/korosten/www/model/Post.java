@@ -67,7 +67,7 @@ public class Post {
     private String thumbNail;
     @SerializedName("thumbnail_images")
     @Expose
-    private List<Image> thumbnailImagesList = new ArrayList<>();
+    private ImageTypes thumbnailImages;
 
 
     /**
@@ -281,11 +281,11 @@ public class Post {
         this.thumbNail = thumbNail;
     }
 
-    public List<Image> getThumbnailImagesList() {
-        return thumbnailImagesList;
+    public ImageTypes getThumbnailImages() {
+        return thumbnailImages;
     }
 
-    public void setThumbnailImagesList(List<Image> thumbnailImagesList) {
-        this.thumbnailImagesList = thumbnailImagesList;
+    public void setThumbnailImages(ImageTypes thumbnailImages) {
+        this.thumbnailImages = thumbnailImages;
     }
 }

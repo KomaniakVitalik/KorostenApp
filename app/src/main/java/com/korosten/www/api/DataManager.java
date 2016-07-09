@@ -4,13 +4,13 @@ package com.korosten.www.api;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.korosten.www.R;
+import com.korosten.www.model.KorostenResponse;
 import com.korosten.www.util.Logger;
 import com.korosten.www.util.Validator;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,11 +27,11 @@ public class DataManager {
     private static final int ERROR_NULL_RESPONSE_OBJECT = 1;
 
     private OnResponseListener mResponseListener;
-    private RetrofitRequest request;
+    private RetrofitRequest requestBuilder;
 
 
     public DataManager(RetrofitRequest retrofitRequest) {
-        this.request = retrofitRequest;
+        this.requestBuilder = retrofitRequest;
     }
 
     /**********************************************************************************************/
@@ -168,21 +168,57 @@ public class DataManager {
     /**************************************** Requests ********************************************/
     /**********************************************************************************************/
 
-
-    public void getAllData() {
-        request.getAllData(new Callback<ResponseBody>() {
+    /**
+     * Checks data count on server.
+     */
+    public void getDataCount() {
+        requestBuilder.getDataCount(new Callback<KorostenResponse>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    Logger.d(TAG, response.raw().body().string());
-                } catch (IOException e) {
-                    e.printStackTrace();
+            public void onResponse(Call<KorostenResponse> call, Response<KorostenResponse> response) {
+                if (!Validator.isObjectValid(response)) {
+                    notifyFailed(ERROR_NULL_RESPONSE_OBJECT, EMPTY_SERVER_MESSAGE);
+                    return;
                 }
+
+                KorostenResponse countResponse = response.body();
+
+                if (!Validator.isObjectValid(response.body())) {
+                    notifyFailed(ERROR_NULL_RESPONSE_OBJECT, EMPTY_SERVER_MESSAGE);
+                    return;
+                }
+
+                Logger.d(TAG, "getDataCount :: pages " + response.body().getPages());
+                Logger.d(TAG, "getDataCount :: count total " + response.body().getCountTotal());
+                getAllData(countResponse.getCountTotal());
+
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<KorostenResponse> call, Throwable t) {
+                Logger.e(TAG, "getDataCount :: failure " + t.toString());
+                notifyFailed(ERROR_NULL_RESPONSE_OBJECT, EMPTY_SERVER_MESSAGE);
+            }
+        });
+    }
+
+    /**
+     * Requests desired data count passes in params from server.
+     */
+    public static final String REQUEST_GET_ALL_DATA = "get_all_data";
+
+    private void getAllData(int count) {
+        requestBuilder.getAllData(count, new Callback<KorostenResponse>() {
+            @Override
+            public void onResponse(Call<KorostenResponse> call, Response<KorostenResponse> response) {
+                Logger.d(TAG, "getAllData :: pages " + response.body().getPages());
+                Logger.d(TAG, "getAllData :: count total " + response.body().getCountTotal());
+                if (deliverResponse(response, REQUEST_GET_ALL_DATA)) ;
+            }
+
+            @Override
+            public void onFailure(Call<KorostenResponse> call, Throwable t) {
                 Logger.e(TAG, "getAllData :: failure " + t.toString());
+                notifyFailed(ERROR_NULL_RESPONSE_OBJECT, EMPTY_SERVER_MESSAGE);
             }
         });
     }

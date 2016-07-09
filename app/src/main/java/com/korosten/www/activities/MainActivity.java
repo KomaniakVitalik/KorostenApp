@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     ////TEST
     private void getAllDataFromServer() {
-        //CoreApp.getInstance().getDataManager().getAllData();
+        //CoreApp.getInstance().getDataManager().checkAmountOfData();
     }
     ////TEST
 }

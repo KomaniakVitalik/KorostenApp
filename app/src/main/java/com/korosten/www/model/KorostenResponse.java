@@ -3,6 +3,9 @@ package com.korosten.www.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by vitaliy.herasymchuk on 7/7/16.
  */
@@ -13,104 +16,78 @@ public class KorostenResponse {
     private String status;
     @SerializedName("count")
     @Expose
-    private Integer count;
+    private int count;
     @SerializedName("count_total")
     @Expose
-    private Integer countTotal;
+    private int countTotal;
     @SerializedName("pages")
     @Expose
-    private Integer pages;
+    private int pages;
     @SerializedName("posts")
     @Expose
-    private Integer posts;
+    private List<Post> posts = new ArrayList<>();
 
     /**
-     *
-     * @return
-     * The status
+     * @return The status
      */
     public String getStatus() {
         return status;
     }
 
     /**
-     *
-     * @param status
-     * The status
+     * @param status The status
      */
     public void setStatus(String status) {
         this.status = status;
     }
 
     /**
-     *
-     * @return
-     * The count
+     * @return The count
      */
-    public Integer getCount() {
+    public int getCount() {
         return count;
     }
 
     /**
-     *
-     * @param count
-     * The count
+     * @param count The count
      */
-    public void setCount(Integer count) {
+    public void setCount(int count) {
         this.count = count;
     }
 
     /**
-     *
-     * @return
-     * The countTotal
+     * @return The countTotal
      */
-    public Integer getCountTotal() {
+    public int getCountTotal() {
         return countTotal;
     }
 
     /**
-     *
-     * @param countTotal
-     * The count_total
+     * @param countTotal The count_total
      */
-    public void setCountTotal(Integer countTotal) {
+    public void setCountTotal(int countTotal) {
         this.countTotal = countTotal;
     }
 
     /**
-     *
-     * @return
-     * The pages
+     * @return The pages
      */
-    public Integer getPages() {
+    public int getPages() {
         return pages;
     }
 
     /**
-     *
-     * @param pages
-     * The pages
+     * @param pages The pages
      */
-    public void setPages(Integer pages) {
+    public void setPages(int pages) {
         this.pages = pages;
     }
 
-    /**
-     *
-     * @return
-     * The posts
-     */
-    public Integer getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
-    /**
-     *
-     * @param posts
-     * The posts
-     */
-    public void setPosts(Integer posts) {
+    public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
 }
