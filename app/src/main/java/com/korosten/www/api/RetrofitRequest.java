@@ -6,6 +6,7 @@ import com.korosten.www.model.KorostenResponse;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +27,7 @@ public class RetrofitRequest {
     public static final String KOROSTEN_TOKEN = "v=3943d8795e03";
     private static final String GET_POSTS_COUNT = "get_recent_posts/?page=1&post_type=any&" + KOROSTEN_TOKEN;
     private static final String GET_RECENT_ALL_POSTS = "get_recent_posts/?page=1&post_type=any";
+    private static final String GET_POSTS_FOR_TAG = "get_tag_posts/?page=1&post_type=any";
 
     private KorostenApi api;
 
@@ -51,9 +53,9 @@ public class RetrofitRequest {
 
     private HttpLoggingInterceptor createLoggingInterceptor() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        // loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
-//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
         return loggingInterceptor;
     }
 
@@ -64,6 +66,9 @@ public class RetrofitRequest {
 
         @GET(GET_RECENT_ALL_POSTS)
         Call<KorostenResponse> getAllData(@Query("count") String count);
+
+        @GET(GET_POSTS_FOR_TAG)
+        Call<ResponseBody> getPostsForTag(@Query("tag_slug") String tag);
 
     }
 
@@ -77,6 +82,10 @@ public class RetrofitRequest {
 
     public void getAllData(int totalDataCount, Callback<KorostenResponse> callback) {
         api.getAllData(String.valueOf(totalDataCount)).enqueue(callback);
+    }
+
+    public void getPostsForTag(String tag, Callback<ResponseBody> callback) {
+        api.getPostsForTag(tag).enqueue(callback);
     }
 
 

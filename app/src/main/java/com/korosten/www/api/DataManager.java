@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -182,7 +183,7 @@ public class DataManager {
     /**
      * Checks data count on server.
      */
-    public void getDataCount() {
+    public void serverGetDataCount() {
         requestBuilder.getDataCount(new Callback<KorostenResponse>() {
             @Override
             public void onResponse(Call<KorostenResponse> call, Response<KorostenResponse> response) {
@@ -198,15 +199,15 @@ public class DataManager {
                     return;
                 }
 
-                Logger.d(TAG, "getDataCount :: pages " + response.body().getPages());
-                Logger.d(TAG, "getDataCount :: count total " + response.body().getCountTotal());
-                getAllData(countResponse.getCountTotal());
+                Logger.d(TAG, "serverGetDataCount :: pages " + response.body().getPages());
+                Logger.d(TAG, "serverGetDataCount :: count total " + response.body().getCountTotal());
+                serverGetAllData(countResponse.getCountTotal());
 
             }
 
             @Override
             public void onFailure(Call<KorostenResponse> call, Throwable t) {
-                Logger.e(TAG, "getDataCount :: failure " + t.toString());
+                Logger.e(TAG, "serverGetDataCount :: failure " + t.toString());
                 notifyFailed(ERROR_NULL_RESPONSE_OBJECT, EMPTY_SERVER_MESSAGE);
             }
         });
@@ -217,12 +218,12 @@ public class DataManager {
      */
     public static final String REQUEST_GET_ALL_DATA = "get_all_data";
 
-    private void getAllData(int count) {
+    private void serverGetAllData(int count) {
         requestBuilder.getAllData(count, new Callback<KorostenResponse>() {
             @Override
             public void onResponse(Call<KorostenResponse> call, Response<KorostenResponse> response) {
-                Logger.d(TAG, "getAllData :: pages " + response.body().getPages());
-                Logger.d(TAG, "getAllData :: count total " + response.body().getCountTotal());
+                Logger.d(TAG, "serverGetAllData :: pages " + response.body().getPages());
+                Logger.d(TAG, "serverGetAllData :: count total " + response.body().getCountTotal());
                 if (deliverResponse(response, REQUEST_GET_ALL_DATA)) {
                     korostenResponse = response.body();
                 }
@@ -230,8 +231,27 @@ public class DataManager {
 
             @Override
             public void onFailure(Call<KorostenResponse> call, Throwable t) {
-                Logger.e(TAG, "getAllData :: failure " + t.toString());
+                Logger.e(TAG, "serverGetAllData :: failure " + t.toString());
                 notifyFailed(ERROR_NULL_RESPONSE_OBJECT, EMPTY_SERVER_MESSAGE);
+            }
+        });
+    }
+
+    /**
+     * Requests Posts for provided tag
+     *
+     * @param tag - slug
+     */
+    public void serverGetPostsForTag(String tag) {
+        requestBuilder.getPostsForTag(tag, new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
             }
         });
     }
@@ -239,10 +259,10 @@ public class DataManager {
     /**
      * Returns Set of available Type of Posts
      */
-    public Set<Type> getPostsTypes() {
+    public Set<Type> getPostsTypesSet() {
 
         if (!postTypes.isEmpty()) {
-            Logger.d(TAG, "getPostsTypes :: list available, do not process");
+            Logger.d(TAG, "getPostsTypesSet :: set is available, do not process");
             return postTypes;
         }
 
@@ -258,15 +278,23 @@ public class DataManager {
         return typeSet;
     }
 
-    public List<Post> getPostsForType(Type type) {
+    /**
+     * Queries KorostenResponse object to find Posts for provided Type
+     *
+     * @param type - Type
+     * @return - List<Post></>
+     */
+    public List<Post> getPostsListForType(Type type) {
         List<Post> posts = new ArrayList<>();
         if (Validator.isObjectValid(type)) {
             for (Post p : getKorostenResponse().getPosts()) {
                 if (Validator.isListValid(p.getTaxonomyAitItemsList())) {
                     if (p.getTaxonomyAitItemsList().size() > 0) {
                         Type t = p.getTaxonomyAitItemsList().get(0);
-                        if (t.equals(type)) {
-                            posts.add(p);
+                        if (Validator.isObjectValid(t)) {
+                            if (t.equals(type)) {
+                                posts.add(p);
+                            }
                         }
                     }
                 }

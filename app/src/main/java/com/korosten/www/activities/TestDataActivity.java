@@ -8,14 +8,9 @@ import android.widget.LinearLayout;
 
 import com.korosten.www.CoreApp;
 import com.korosten.www.R;
-import com.korosten.www.model.Post;
 import com.korosten.www.model.Type;
 import com.korosten.www.util.Logger;
-import com.korosten.www.util.Validator;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class TestDataActivity extends BaseActivity implements View.OnClickListener {
@@ -27,11 +22,8 @@ public class TestDataActivity extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_data);
 
-        generateUiBasingOnAvailablePostTypes(getDataManager().getPostsTypes());
+        generateUiBasingOnAvailablePostTypes(getDataManager().getPostsTypesSet());
     }
-
-
-
 
 
     //TODO Stub
@@ -51,7 +43,8 @@ public class TestDataActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         Type type = (Type) v.getTag();
-        CoreApp.getInstance().setPostsStub(getDataManager().getPostsForType(type));
+        CoreApp.getInstance().setPostsStub(getDataManager().getPostsListForType(type));
+//        CoreApp.getInstance().getDataManager().serverGetPostsForTag(type.getSlug());
         startActivity(new Intent(this, TestCategoryListActivity.class));
     }
 }
